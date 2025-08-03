@@ -49,14 +49,14 @@
         }
 
         /* Styling untuk tombol pesan */
-        #order-button {
+        #order-button, #send-proof-button, #send-format-button {
             transition: all 0.3s ease;
         }
-        #order-button:hover {
+        #order-button:hover, #send-proof-button:hover, #send-format-button:hover {
             background-color: #1E3A8A;
             transform: scale(1.05);
         }
-
+        
         /* Styling untuk message box */
         .message-box {
             transition: opacity 0.3s ease;
@@ -92,11 +92,10 @@
                 <input type="text" id="roblox-username" placeholder="Masukkan nama pengguna Roblox..."
                        class="w-full px-4 py-3 bg-gray-50 border border-gray-400 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
             </div>
-            
+
             <!-- Input Kustom Robux yang dipindahkan ke atas -->
             <div class="mb-4">
                 <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Atau Masukkan Jumlah Robux Lain</h3>
-                <!-- Menambahkan atribut `min="100"` pada input number -->
                 <div id="custom-robux-input-container" class="custom-robux-input-container flex items-center bg-gray-50 border-2 border-gray-400 rounded-xl p-4">
                     <input type="number" id="custom-robux-amount" placeholder="Minimal 100" min="100"
                            class="w-full px-4 py-3 bg-gray-50 border border-gray-400 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
@@ -190,6 +189,10 @@
                     dengan harga <span id="gamepass-price" class="font-bold text-blue-600"></span> Robux.
                 </p>
                 <p class="text-gray-600 text-xs italic">Roblox akan mengambil 30% dari harga jual Gamepass.</p>
+                <!-- Tombol ke tutorial gamepass -->
+                <a href="#tutorial-gamepass" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mt-4 hover:bg-blue-600 transition-colors duration-300">
+                    Lihat Tutorial Membuat Gamepass
+                </a>
             </div>
         </section>
 
@@ -208,30 +211,96 @@
                 <p class="text-gray-700 text-lg mb-2">Anda akan memesan: <span id="selected-robux" class="font-bold text-blue-500"></span></p>
                 <p class="text-gray-700 text-lg">Total Pembayaran: <span id="total-price" class="font-bold text-blue-600"></span></p>
             </div>
-            
-            <!-- QRIS Payment -->
-            <div class="bg-gray-50 p-6 rounded-xl text-center max-w-sm mx-auto">
+
+            <!-- QRIS Payment dan Upload Bukti -->
+            <div id="proof-upload-section" class="bg-gray-50 p-6 rounded-xl text-center max-w-sm mx-auto">
                 <h3 class="text-xl font-bold mb-4 text-gray-900">QRIS Payment</h3>
                 <p class="text-gray-700 mb-4 text-sm">Langkah 1: Klik tombol di bawah ini untuk melihat detail pembayaran QRIS.</p>
-                <!-- Tautan yang bertuliskan "KLIK INI UNTUK MEMUNCULKAN QRIS" -->
                 <a href="https://imgur.com/a/raI9QRr" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105">
                     KLIK INI UNTUK MEMUNCULKAN QRIS
                 </a>
-                <p class="text-gray-700 mt-4">Setelah membayar, kembali ke halaman ini dan klik tombol WhatsApp.</p>
-            </div>
 
-            <!-- Bagian Kirim Bukti Pembayaran via WhatsApp -->
-            <div class="mt-8 text-center max-w-sm mx-auto">
-                <p class="text-gray-700 mb-4 text-sm">Langkah 2: Setelah membayar, klik tombol di bawah untuk kirim bukti pembayaran via WhatsApp.</p>
-                <!-- Tombol WhatsApp akan diaktifkan oleh JavaScript -->
-                <a id="whatsapp-link" href="#" target="_blank" rel="noopener noreferrer" 
-                   class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105">
+                <hr class="my-6 border-gray-300">
+
+                <p class="text-gray-700 mb-4 text-sm">Langkah 2: Unggah bukti pembayaran Anda di sini.</p>
+                <input type="file" id="payment-proof-file" accept="image/*" class="w-full text-gray-700 mb-4">
+                
+                <button id="send-proof-button" onclick="sendPaymentProof()"
+                        class="hidden inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105">
                     <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12.04 2.16c-5.46 0-9.91 4.45-9.91 9.91 0 1.76.47 3.42 1.34 4.88l-1.42 5.17 5.25-1.38c1.42.75 3.01 1.15 4.74 1.15 5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.91-9.91zm0 18.15c-1.57 0-3.08-.43-4.39-1.25l-3.13.82.84-3.06c-.84-1.33-1.28-2.85-1.28-4.41 0-4.63 3.77-8.4 8.4-8.4s8.4 3.77 8.4 8.4c0 4.63-3.77 8.4-8.4 8.4zm4.52-6.16c-.23-.12-1.36-.67-1.58-.75-.22-.08-.38-.12-.54.12-.16.24-.62.75-.76.91-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-.95-.71-.45-1.19-.71-1.58-.95-.4-.24-.46-.35-.04-.54.38-.17.6-.26.8-.46.2-.18.28-.4.42-.58.12-.16.07-.3.04-.42-.08-.24-.54-1.3-.74-1.78-.2-.5-.4-1.04-.76-1.04-.16 0-.34.06-.52.06-.18 0-.48.04-.72.04-.24 0-.62-.12-.86.3-.24.42-.92.89-.92 2.16 0 1.27.94 2.51 1.08 2.68.14.16 1.83 2.8 4.4 3.86 2.57 1.06 2.57.78 2.86.74.28-.04.88-.36 1-.72.12-.36.14-.66.1-.72-.04-.08-.16-.14-.34-.23z"/>
                     </svg>
                     Kirim Bukti Pembayaran
+                </button>
+            </div>
+
+            <!-- Bagian untuk mengirim format topup (tersembunyi secara default) -->
+            <div id="topup-format-section" class="hidden mt-8 text-center max-w-sm mx-auto">
+                <p class="text-gray-700 mb-4 text-sm">Langkah 3: Setelah mengirim bukti, klik tombol di bawah ini untuk mengirim format top-up.</p>
+                <a id="send-format-link" href="#" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105">
+                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.04 2.16c-5.46 0-9.91 4.45-9.91 9.91 0 1.76.47 3.42 1.34 4.88l-1.42 5.17 5.25-1.38c1.42.75 3.01 1.15 4.74 1.15 5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.91-9.91zm0 18.15c-1.57 0-3.08-.43-4.39-1.25l-3.13.82.84-3.06c-.84-1.33-1.28-2.85-1.28-4.41 0-4.63 3.77-8.4 8.4-8.4s8.4 3.77 8.4 8.4c0 4.63-3.77 8.4-8.4 8.4zm4.52-6.16c-.23-.12-1.36-.67-1.58-.75-.22-.08-.38-.12-.54.12-.16.24-.62.75-.76.91-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-.95-.71-.45-1.19-.71-1.58-.95-.4-.24-.46-.35-.04-.54.38-.17.6-.26.8-.46.2-.18.28-.4.42-.58.12-.16.07-.3.04-.42-.08-.24-.54-1.3-.74-1.78-.2-.5-.4-1.04-.76-1.04-.16 0-.34.06-.52.06-.18 0-.48.04-.72.04-.24 0-.62-.12-.86.3-.24.42-.92.89-.92 2.16 0 1.27.94 2.51 1.08 2.68.14.16 1.83 2.8 4.4 3.86 2.57 1.06 2.57.78 2.86.74.28-.04.88-.36 1-.72.12-.36.14-.66.1-.72-.04-.08-.16-.14-.34-.23z"/>
+                    </svg>
+                    Kirim Format Top Up
                 </a>
             </div>
+        </section>
+
+        <!-- Bagian Tutorial Gamepass -->
+        <section id="tutorial-gamepass" class="mt-10 p-6 bg-gray-50 rounded-2xl shadow-lg">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Panduan Lengkap Membuat Gamepass Roblox</h2>
+            <p class="text-gray-700 mb-4">
+                Agar proses top up Robux Anda berjalan lancar, Anda perlu membuat **Gamepass** di akun Roblox Anda dengan harga yang sesuai. Tutorial ini akan memandu Anda langkah demi langkah.
+            </p>
+
+            <div class="mb-6">
+                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Langkah-langkah Membuat Gamepass:</h3>
+                <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                    <li>
+                        <strong class="font-semibold">Buka Halaman Buat Gamepass</strong>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Buka browser Anda dan kunjungi halaman `create` di Roblox: <a href="https://www.roblox.com/develop?View=13" target="_blank" class="text-blue-600 hover:underline">roblox.com/develop?View=13</a></li>
+                            <li>Pastikan Anda sudah login ke akun Roblox Anda.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="font-semibold">Pilih Pengalaman Anda (Place)</strong>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Di halaman `My Creations`, Anda akan melihat daftar semua game/place yang Anda miliki.</li>
+                            <li>Klik pada tempat (place) yang ingin Anda gunakan untuk Gamepass. Biasanya, ini adalah `Personal Server` atau place default Anda.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="font-semibold">Unggah Gamepass</strong>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Di halaman tempat Anda, cari dan klik `Associated Items` (Item Terkait) di menu sebelah kiri.</li>
+                            <li>Pilih `Passes`.</li>
+                            <li>Klik tombol `Create a Pass`.</li>
+                            <li>Klik `Change Image` untuk mengunggah gambar Gamepass dari perangkat Anda. Anda bisa menggunakan gambar apa saja.</li>
+                            <li>Beri nama Gamepass Anda (misalnya: "Robux Top Up") dan tambahkan deskripsi singkat.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="font-semibold">Atur Gamepass untuk Dijual</strong>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Setelah Gamepass berhasil dibuat, klik pada Gamepass tersebut.</li>
+                            <li>Di menu sebelah kiri, klik `Sales` (Penjualan).</li>
+                            <li>Aktifkan opsi `Item for Sale`.</li>
+                            <li>Pada kolom `Price in Robux`, masukkan harga yang telah kami berikan di halaman pembayaran. <strong class="font-bold text-red-600">Ini sangat penting!</strong> Masukkan harga yang persis sama.</li>
+                            <li>Roblox akan mengambil biaya 30% dari harga jual. Jadi, jika Anda mengatur harga `143` Robux, Anda akan menerima `100` Robux.</li>
+                            <li>Klik `Save Changes` untuk menyimpan Gamepass Anda.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="font-semibold">Selesai!</strong>
+                        <p class="ml-4">Sekarang, Gamepass Anda sudah siap. Setelah pembayaran terverifikasi, kami akan membeli Gamepass Anda.</p>
+                    </li>
+                </ol>
+            </div>
+            <p class="text-red-600 font-bold mt-4">
+                Penting: Pastikan Anda telah mengunggah Gamepass dengan harga yang benar sebelum mengirimkan format top up. Jika ada kesalahan, kami tidak bertanggung jawab.
+            </p>
         </section>
 
         <!-- Message Box untuk Notifikasi -->
@@ -251,12 +320,12 @@
         // Deklarasi variabel global untuk menyimpan jumlah dan harga yang dipilih
         let selectedAmount = null;
         let selectedPrice = null;
-        
+
         // Harga per Robux (Rp 12.000 / 100 Robux = Rp 120 per Robux)
         const pricePerRobux = 120;
 
         // Nomor WhatsApp yang dituju
-        const whatsappNumber = "62895620955938";
+        const whatsappNumber = "6282241515939";
 
         // Mendapatkan elemen-elemen DOM yang diperlukan
         const robuxCards = document.querySelectorAll('.robux-card');
@@ -266,9 +335,15 @@
         const gamepassInfoSection = document.getElementById('gamepass-info-section');
         const messageBox = document.getElementById('message-box');
         const messageText = document.getElementById('message-text');
-        const whatsappLink = document.getElementById('whatsapp-link');
         const orderButton = document.getElementById('order-button');
         const usernameInput = document.getElementById('roblox-username');
+
+        // Elemen-elemen baru untuk alur pembayaran
+        const proofUploadSection = document.getElementById('proof-upload-section');
+        const paymentProofFile = document.getElementById('payment-proof-file');
+        const sendProofButton = document.getElementById('send-proof-button');
+        const topupFormatSection = document.getElementById('topup-format-section');
+        const sendFormatLink = document.getElementById('send-format-link');
 
         /**
          * Fungsi untuk menampilkan pesan di message box.
@@ -279,7 +354,7 @@
             messageText.innerText = message;
             messageBox.classList.remove('hidden', 'error', 'success');
             messageBox.classList.add(type);
-            
+
             setTimeout(() => {
                 messageBox.classList.add('hidden');
             }, 3000);
@@ -302,7 +377,7 @@
             // Simpan nilai yang dipilih ke variabel global
             selectedAmount = amount;
             selectedPrice = price;
-            
+
             // Hapus nilai dari input kustom
             customRobuxInput.value = '';
 
@@ -315,7 +390,7 @@
          */
         function selectCustomRobux() {
             const amount = parseInt(customRobuxInput.value, 10);
-            
+
             // Validasi input: Cek apakah nominal valid dan lebih dari atau sama dengan 100
             if (isNaN(amount) || amount < 100) {
                 showMessage("Mohon masukkan nominal Robux minimal 100.");
@@ -342,7 +417,7 @@
             // Perbarui tampilan informasi Gamepass
             updateGamepassInfo(selectedAmount);
         }
-        
+
         /**
          * Memperbarui tampilan informasi Gamepass.
          * @param {number} amount - Jumlah Robux yang akan ditampilkan.
@@ -379,20 +454,58 @@
             document.getElementById('selected-robux').innerText = `${selectedAmount.toLocaleString('id-ID')} Robux`;
             document.getElementById('total-price').innerText = `Rp ${selectedPrice.toLocaleString('id-ID')}`;
 
-            // Buat pesan WhatsApp dengan data dinamis
-            const message = `Halo KAZEROBLOX,%0ASaya telah melakukan top up.%0A%0ADetail Pesanan:%0ANama Roblox: ${username}%0AJumlah Robux: ${selectedAmount.toLocaleString('id-ID')} Robux%0APembayaran: QRIS%0A%0AIni adalah bukti pembayarannya: (Sertakan bukti pembayaran disini)`;
-            
-            // Set URL untuk tombol WhatsApp
-            whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${message}`;
-
             // Tampilkan bagian pembayaran
             paymentSection.classList.remove('hidden');
-            
+            proofUploadSection.classList.remove('hidden');
+            topupFormatSection.classList.add('hidden'); // Pastikan bagian format topup tersembunyi
+
             // Sembunyikan tombol pesan untuk menghindari pesanan ganda
             orderButton.classList.add('hidden');
 
             // Scroll ke bagian pembayaran dengan efek halus
             paymentSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Event listener untuk input file
+        paymentProofFile.addEventListener('change', (event) => {
+            if (event.target.files.length > 0) {
+                sendProofButton.classList.remove('hidden');
+            } else {
+                sendProofButton.classList.add('hidden');
+            }
+        });
+        
+        /**
+         * Fungsi untuk mengirim bukti pembayaran melalui WhatsApp.
+         * Dipanggil saat tombol "Kirim Bukti Pembayaran" diklik.
+         */
+        function sendPaymentProof() {
+            const username = usernameInput.value.trim();
+            
+            // Buat pesan WhatsApp untuk kirim bukti pembayaran
+            const proofMessage = `Halo KAZEROBLOX,%0ASaya telah melakukan top up.%0A%0ADetail Pesanan:%0ANama Roblox: ${username}%0AJumlah Robux: ${selectedAmount.toLocaleString('id-ID')} Robux%0APembayaran: QRIS%0A%0AIni adalah bukti pembayarannya: (Sertakan bukti pembayaran disini)`;
+            
+            // Buka tautan WhatsApp di tab baru
+            window.open(`https://wa.me/${whatsappNumber}?text=${proofMessage}`, '_blank');
+            
+            // Setelah mengirim bukti, sembunyikan bagian upload bukti dan tampilkan bagian format topup
+            proofUploadSection.classList.add('hidden');
+            showTopupFormat();
+        }
+
+        /**
+         * Fungsi untuk menampilkan bagian pengiriman format top-up.
+         * Dipanggil setelah pengguna mengklik "Kirim Bukti Pembayaran".
+         */
+        function showTopupFormat() {
+            const username = usernameInput.value.trim();
+            const topupMessage = `Halo KAZEROBLOX,%0AIni format topup saya.%0A%0ANama Roblox: ${username}%0AJumlah Robux: ${selectedAmount.toLocaleString('id-ID')} Robux%0A%0AMohon diproses, terima kasih.`;
+            
+            // Set URL untuk tombol WhatsApp Kirim Format Top Up
+            sendFormatLink.href = `https://wa.me/${whatsappNumber}?text=${topupMessage}`;
+            
+            // Tampilkan bagian pengiriman format top-up
+            topupFormatSection.classList.remove('hidden');
         }
     </script>
 
