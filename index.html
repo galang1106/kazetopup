@@ -13,27 +13,39 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Styling tambahan untuk efek hover pada kartu Robux */
-        .robux-card {
+        /* Styling tambahan untuk efek hover pada kartu Robux dan input kustom */
+        .robux-card, .custom-robux-input-container {
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
         }
-        .robux-card:hover {
+        .robux-card:hover, .custom-robux-input-container:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
         }
 
-        /* Warna highlight untuk kartu yang dipilih */
-        .robux-card.selected {
+        /* Kelas untuk kartu Robux dan input kustom yang dipilih */
+        .robux-card.selected, .custom-robux-input-container.selected {
             border-color: #BFDBFE; /* Biru muda */
             background-color: #1E40AF; /* Background biru tua */
             color: #FFFFFF; /* Teks putih */
         }
-        .robux-card.selected .text-blue-500 {
-            color: #FFFFFF;
+        /* Mengatur warna teks di dalam kartu yang dipilih */
+        .robux-card.selected .robux-amount {
+            color: #FFFFFF !important;
         }
-        .robux-card.selected .text-white {
-            color: #BFDBFE;
+        .robux-card.selected .robux-price {
+            color: #BFDBFE !important;
+        }
+        .custom-robux-input-container.selected input {
+            background-color: #1E40AF !important;
+            color: #FFFFFF !important;
+        }
+        .custom-robux-input-container.selected input::placeholder {
+            color: #BFDBFE !important;
+        }
+        .custom-robux-input-container.selected button {
+            background-color: #BFDBFE !important;
+            color: #1E40AF !important;
         }
 
         /* Styling untuk tombol pesan */
@@ -43,6 +55,17 @@
         #order-button:hover {
             background-color: #1E3A8A;
             transform: scale(1.05);
+        }
+
+        /* Styling untuk message box */
+        .message-box {
+            transition: opacity 0.3s ease;
+        }
+        .message-box.error {
+            background-color: #DC2626; /* Merah untuk error */
+        }
+        .message-box.success {
+            background-color: #1E40AF; /* Biru tua untuk sukses */
         }
     </style>
 </head>
@@ -62,13 +85,28 @@
             <p class="text-lg sm:text-xl font-bold">Selamat datang di KAZEROBLOX, tempat top up Robux termurah!</p>
         </div>
 
-        <!-- Form Input Nama Roblox -->
+        <!-- Form Input Nama Roblox dan Input Kustom Robux -->
         <section id="input-section" class="mb-8">
             <div class="mb-4">
                 <label for="roblox-username" class="block text-gray-700 font-medium mb-2 text-lg">Nama Roblox Anda:</label>
                 <input type="text" id="roblox-username" placeholder="Masukkan nama pengguna Roblox..."
                        class="w-full px-4 py-3 bg-gray-50 border border-gray-400 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
             </div>
+            
+            <!-- Input Kustom Robux yang dipindahkan ke atas -->
+            <div class="mb-4">
+                <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Atau Masukkan Jumlah Robux Lain</h3>
+                <!-- Menambahkan atribut `min="100"` pada input number -->
+                <div id="custom-robux-input-container" class="custom-robux-input-container flex items-center bg-gray-50 border-2 border-gray-400 rounded-xl p-4">
+                    <input type="number" id="custom-robux-amount" placeholder="Minimal 100" min="100"
+                           class="w-full px-4 py-3 bg-gray-50 border border-gray-400 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                    <button id="select-custom-button" onclick="selectCustomRobux()"
+                            class="ml-4 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">
+                        Pilih
+                    </button>
+                </div>
+            </div>
+
             <!-- Peringatan -->
             <p class="text-center text-blue-600 font-bold text-sm">
                 Jangan Sampai Salah Tulis Nama Roblox Kalian Dan Jika Salah Tidak Ada Tanggung Jawab Dari Kami
@@ -81,63 +119,63 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 <!-- Robux Card 100 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 100, 12000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">100 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 12.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">100 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 12.000</span>
                 </div>
                 <!-- Robux Card 200 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 200, 24000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">200 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 24.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">200 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 24.000</span>
                 </div>
                 <!-- Robux Card 300 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 300, 36000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">300 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 36.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">300 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 36.000</span>
                 </div>
                 <!-- Robux Card 400 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 400, 48000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">400 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 48.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">400 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 48.000</span>
                 </div>
                 <!-- Robux Card 500 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 500, 60000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">500 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 60.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">500 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 60.000</span>
                 </div>
                 <!-- Robux Card 600 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 600, 72000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">600 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 72.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">600 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 72.000</span>
                 </div>
                 <!-- Robux Card 700 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 700, 84000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">700 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 84.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">700 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 84.000</span>
                 </div>
                 <!-- Robux Card 800 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 800, 96000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">800 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 96.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">800 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 96.000</span>
                 </div>
                 <!-- Robux Card 900 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 900, 108000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">900 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 108.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">900 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 108.000</span>
                 </div>
                 <!-- Robux Card 1000 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 1000, 120000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">1000 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 120.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">1000 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 120.000</span>
                 </div>
                 <!-- Robux Card 1500 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 1500, 180000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">1500 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 180.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">1500 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 180.000</span>
                 </div>
                 <!-- Robux Card 2000 -->
                 <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 2000, 240000)">
-                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl">2000 Robux</span>
-                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1">Rp 240.000</span>
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">2000 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 240.000</span>
                 </div>
             </div>
         </section>
@@ -197,7 +235,7 @@
         </section>
 
         <!-- Message Box untuk Notifikasi -->
-        <div id="message-box" class="fixed bottom-5 right-5 hidden bg-blue-600 text-white p-4 rounded-lg shadow-lg">
+        <div id="message-box" class="fixed bottom-5 right-5 hidden message-box p-4 rounded-lg shadow-lg text-white">
             <span id="message-text"></span>
         </div>
 
@@ -210,83 +248,139 @@
 
     <!-- Script JavaScript untuk interaksi -->
     <script>
+        // Deklarasi variabel global untuk menyimpan jumlah dan harga yang dipilih
         let selectedAmount = null;
         let selectedPrice = null;
-        let robuxCards = document.querySelectorAll('.robux-card');
+        
+        // Harga per Robux (Rp 12.000 / 100 Robux = Rp 120 per Robux)
+        const pricePerRobux = 120;
+
+        // Nomor WhatsApp yang dituju
+        const whatsappNumber = "62895620955938";
+
+        // Mendapatkan elemen-elemen DOM yang diperlukan
+        const robuxCards = document.querySelectorAll('.robux-card');
+        const customRobuxInput = document.getElementById('custom-robux-amount');
+        const customRobuxContainer = document.getElementById('custom-robux-input-container');
         const paymentSection = document.getElementById('payment-section');
         const gamepassInfoSection = document.getElementById('gamepass-info-section');
         const messageBox = document.getElementById('message-box');
         const messageText = document.getElementById('message-text');
         const whatsappLink = document.getElementById('whatsapp-link');
+        const orderButton = document.getElementById('order-button');
+        const usernameInput = document.getElementById('roblox-username');
 
-        // Nomor WhatsApp tujuan. Ganti dengan nomor WhatsApp Anda!
-        const whatsappNumber = '6282241515939';
-
-        // Fungsi untuk menampilkan pesan di message box
+        /**
+         * Fungsi untuk menampilkan pesan di message box.
+         * @param {string} message - Teks pesan yang akan ditampilkan.
+         * @param {string} [type='error'] - Jenis pesan ('error' atau 'success').
+         */
         function showMessage(message, type = 'error') {
             messageText.innerText = message;
-            if (type === 'error') {
-                messageBox.style.backgroundColor = '#DC2626'; // Merah
-            } else {
-                messageBox.style.backgroundColor = '#1E40AF'; // Biru tua untuk sukses
-            }
-            messageBox.classList.remove('hidden');
+            messageBox.classList.remove('hidden', 'error', 'success');
+            messageBox.classList.add(type);
+            
             setTimeout(() => {
                 messageBox.classList.add('hidden');
             }, 3000);
         }
 
-        // Fungsi untuk memilih jumlah Robux
+        /**
+         * Fungsi untuk memilih jumlah Robux dari kartu yang tersedia.
+         * @param {HTMLElement} element - Elemen kartu yang diklik.
+         * @param {number} amount - Jumlah Robux yang dipilih.
+         * @param {number} price - Harga Robux yang dipilih.
+         */
         function selectRobux(element, amount, price) {
-            // Hapus kelas 'selected' dari semua kartu
-            robuxCards.forEach(card => {
-                card.classList.remove('selected');
-                card.classList.remove('bg-blue-100', 'border-blue-600', 'text-blue-900');
-                card.classList.add('bg-gray-50', 'border-gray-400');
-                card.querySelector('span:first-child').style.color = '#3B82F6';
-                card.querySelector('span:last-child').style.color = '#4B5563';
-            });
+            // Hapus kelas 'selected' dari semua kartu dan input kustom
+            robuxCards.forEach(card => card.classList.remove('selected'));
+            customRobuxContainer.classList.remove('selected');
 
-            // Tambahkan kelas 'selected' ke kartu yang diklik
+            // Tambahkan kelas 'selected' ke kartu yang baru diklik
             element.classList.add('selected');
-            element.classList.remove('bg-gray-50', 'border-gray-400');
-            element.classList.add('bg-blue-100', 'border-blue-600');
-            element.querySelector('span:first-child').style.color = '#1E40AF';
-            element.querySelector('span:last-child').style.color = '#1E40AF';
 
+            // Simpan nilai yang dipilih ke variabel global
+            selectedAmount = amount;
+            selectedPrice = price;
+            
+            // Hapus nilai dari input kustom
+            customRobuxInput.value = '';
 
-            // Simpan nilai yang dipilih
+            // Perbarui tampilan informasi Gamepass
+            updateGamepassInfo(selectedAmount);
+        }
+
+        /**
+         * Fungsi untuk memilih jumlah Robux dari input kustom.
+         */
+        function selectCustomRobux() {
+            const amount = parseInt(customRobuxInput.value, 10);
+            
+            // Validasi input: Cek apakah nominal valid dan lebih dari atau sama dengan 100
+            if (isNaN(amount) || amount < 100) {
+                showMessage("Mohon masukkan nominal Robux minimal 100.");
+                // Hapus pilihan sebelumnya jika ada
+                selectedAmount = null;
+                selectedPrice = null;
+                gamepassInfoSection.classList.add('hidden');
+                return;
+            }
+
+            // Hapus kelas 'selected' dari semua kartu
+            robuxCards.forEach(card => card.classList.remove('selected'));
+
+            // Tambahkan kelas 'selected' ke container input kustom
+            customRobuxContainer.classList.add('selected');
+
+            // Hitung harga berdasarkan nominal kustom
+            const price = amount * pricePerRobux;
+
+            // Simpan nilai ke variabel global
             selectedAmount = amount;
             selectedPrice = price;
 
-            console.log(`Jumlah Robux terpilih: ${selectedAmount}, Harga: Rp ${selectedPrice.toLocaleString('id-ID')}`);
-
-            // Tampilkan informasi Gamepass
-            const gamepassPrice = Math.ceil(selectedAmount / 0.7);
-            document.getElementById('gamepass-robux-amount').innerText = selectedAmount;
-            document.getElementById('gamepass-price').innerText = gamepassPrice.toLocaleString('id-ID');
-            gamepassInfoSection.classList.remove('hidden');
+            // Perbarui tampilan informasi Gamepass
+            updateGamepassInfo(selectedAmount);
+        }
+        
+        /**
+         * Memperbarui tampilan informasi Gamepass.
+         * @param {number} amount - Jumlah Robux yang akan ditampilkan.
+         */
+        function updateGamepassInfo(amount) {
+            if (amount) {
+                // Hitung harga gamepass yang dibutuhkan (Roblox mengambil 30%)
+                const gamepassPrice = Math.ceil(amount / 0.7);
+                document.getElementById('gamepass-robux-amount').innerText = amount.toLocaleString('id-ID');
+                document.getElementById('gamepass-price').innerText = gamepassPrice.toLocaleString('id-ID');
+                gamepassInfoSection.classList.remove('hidden');
+            } else {
+                gamepassInfoSection.classList.add('hidden');
+            }
         }
 
-        // Fungsi untuk memproses pesanan
+
+        /**
+         * Fungsi untuk memproses pesanan saat tombol 'Pesan Sekarang' diklik.
+         */
         function placeOrder() {
-            const username = document.getElementById('roblox-username').value.trim();
+            const username = usernameInput.value.trim();
 
             if (!username) {
                 showMessage("Mohon masukkan nama Roblox Anda.");
                 return;
             }
             if (!selectedAmount) {
-                showMessage("Mohon pilih jumlah Robux yang ingin di top up.");
+                showMessage("Mohon pilih jumlah Robux yang ingin di top up atau masukkan nominal kustom.");
                 return;
             }
 
-            // Menampilkan detail pesanan dan bagian pembayaran
-            document.getElementById('selected-robux').innerText = `${selectedAmount} Robux`;
+            // Menampilkan detail pesanan di bagian pembayaran
+            document.getElementById('selected-robux').innerText = `${selectedAmount.toLocaleString('id-ID')} Robux`;
             document.getElementById('total-price').innerText = `Rp ${selectedPrice.toLocaleString('id-ID')}`;
 
             // Buat pesan WhatsApp dengan data dinamis
-            const message = `Halo KAZEROBLOX,%0ASaya telah melakukan top up.%0A%0ADetail Pesanan:%0ANama Roblox: ${username}%0AJumlah Robux: ${selectedAmount} Robux%0APembayaran: QRIS%0A%0AIni adalah bukti pembayarannya: (Sertakan bukti pembayaran disini)`;
+            const message = `Halo KAZEROBLOX,%0ASaya telah melakukan top up.%0A%0ADetail Pesanan:%0ANama Roblox: ${username}%0AJumlah Robux: ${selectedAmount.toLocaleString('id-ID')} Robux%0APembayaran: QRIS%0A%0AIni adalah bukti pembayarannya: (Sertakan bukti pembayaran disini)`;
             
             // Set URL untuk tombol WhatsApp
             whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${message}`;
@@ -294,7 +388,10 @@
             // Tampilkan bagian pembayaran
             paymentSection.classList.remove('hidden');
             
-            // Scroll ke bagian pembayaran
+            // Sembunyikan tombol pesan untuk menghindari pesanan ganda
+            orderButton.classList.add('hidden');
+
+            // Scroll ke bagian pembayaran dengan efek halus
             paymentSection.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
