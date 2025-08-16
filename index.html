@@ -85,7 +85,7 @@
             <p class="text-lg sm:text-xl font-bold">Selamat datang di KAZEROBLOX, tempat top up Robux termurah!</p>
         </div>
 
-        <!-- Form Input Nama Roblox dan Input Kustom Robux -->
+        <!-- Form Input Nama Roblox -->
         <section id="input-section" class="mb-8">
             <div class="mb-4">
                 <label for="roblox-username" class="block text-gray-700 font-medium mb-2 text-lg">Nama Roblox Anda:</label>
@@ -93,89 +93,171 @@
                        class="w-full px-4 py-3 bg-gray-50 border border-gray-400 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
             </div>
 
-            <!-- Input Kustom Robux yang dipindahkan ke atas -->
-            <div class="mb-4">
-                <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Atau Masukkan Jumlah Robux Lain</h3>
-                <div id="custom-robux-input-container" class="custom-robux-input-container flex items-center bg-gray-50 border-2 border-gray-400 rounded-xl p-4">
-                    <input type="number" id="custom-robux-amount" placeholder="Minimal 100" min="100"
-                           class="w-full px-4 py-3 bg-gray-50 border border-gray-400 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
-                    <button id="select-custom-button" onclick="selectCustomRobux()"
-                            class="ml-4 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">
-                        Pilih
-                    </button>
-                </div>
-            </div>
-
             <!-- Peringatan -->
             <p class="text-center text-blue-600 font-bold text-sm">
                 Jangan Sampai Salah Tulis Nama Roblox Kalian Dan Jika Salah Tidak Ada Tanggung Jawab Dari Kami
             </p>
         </section>
+        
+        <!-- Pilihan Metode Top Up -->
+        <section id="method-selection-section" class="mb-8 p-6 bg-gray-50 rounded-xl shadow-inner">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 text-center">Pilih Metode Top Up</h2>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <label for="method-gamepass" class="flex items-center text-gray-700 font-medium cursor-pointer robux-card p-4 rounded-xl border-2 border-gray-400">
+                    <input type="radio" id="method-gamepass" name="topup-method" value="gamepass" checked class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                    <span class="ml-2 text-xl font-semibold">Metode Gamepass</span>
+                </label>
+                <label for="method-instant" class="flex items-center text-gray-700 font-medium cursor-pointer robux-card p-4 rounded-xl border-2 border-gray-400" id="instant-method-label">
+                    <input type="radio" id="method-instant" name="topup-method" value="instant" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                    <span class="ml-2 text-xl font-semibold">Metode Instan</span>
+                </label>
+            </div>
+        </section>
 
-        <!-- Pilihan Jumlah Robux -->
-        <section id="robux-options" class="mb-8">
-            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Pilih Jumlah Robux</h2>
+        <!-- Pilihan Jumlah Robux - Gamepass Method (Tampilkan secara default) -->
+        <section id="gamepass-options-section" class="mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Pilih Jumlah Robux (Gamepass)</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 <!-- Robux Card 100 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 100, 12000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 100, 12000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">100 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 12.000</span>
                 </div>
                 <!-- Robux Card 200 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 200, 24000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 200, 24000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">200 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 24.000</span>
                 </div>
                 <!-- Robux Card 300 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 300, 36000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 300, 36000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">300 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 36.000</span>
                 </div>
                 <!-- Robux Card 400 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 400, 48000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 400, 48000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">400 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 48.000</span>
                 </div>
                 <!-- Robux Card 500 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 500, 60000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 500, 60000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">500 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 60.000</span>
                 </div>
                 <!-- Robux Card 600 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 600, 72000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 600, 72000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">600 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 72.000</span>
                 </div>
                 <!-- Robux Card 700 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 700, 84000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 700, 84000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">700 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 84.000</span>
                 </div>
                 <!-- Robux Card 800 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 800, 96000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 800, 96000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">800 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 96.000</span>
                 </div>
                 <!-- Robux Card 900 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 900, 108000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 900, 108000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">900 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 108.000</span>
                 </div>
                 <!-- Robux Card 1000 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 1000, 120000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 1000, 120000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">1000 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 120.000</span>
                 </div>
                 <!-- Robux Card 1500 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 1500, 180000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 1500, 180000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">1500 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 180.000</span>
                 </div>
                 <!-- Robux Card 2000 -->
-                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 2000, 240000)">
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 2000, 240000, 'gamepass')">
                     <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">2000 Robux</span>
                     <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 240.000</span>
                 </div>
+            </div>
+        </section>
+        
+        <!-- Pilihan Jumlah Robux - Instant Method (Tersembunyi secara default) -->
+        <section id="instant-options-section" class="mb-8 hidden">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Pilih Jumlah Robux (Instan)</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Robux Card 100 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 100, 15000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">100 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 15.000</span>
+                </div>
+                <!-- Robux Card 200 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 200, 30000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">200 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 30.000</span>
+                </div>
+                <!-- Robux Card 300 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 300, 45000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">300 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 45.000</span>
+                </div>
+                <!-- Robux Card 400 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 400, 60000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">400 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 60.000</span>
+                </div>
+                <!-- Robux Card 500 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 500, 75000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">500 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 75.000</span>
+                </div>
+                <!-- Robux Card 600 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 600, 90000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">600 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 90.000</span>
+                </div>
+                <!-- Robux Card 700 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 700, 105000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">700 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 105.000</span>
+                </div>
+                <!-- Robux Card 800 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 800, 120000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">800 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 120.000</span>
+                </div>
+                <!-- Robux Card 900 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 900, 135000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">900 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 135.000</span>
+                </div>
+                <!-- Robux Card 1000 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 1000, 150000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">1000 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 150.000</span>
+                </div>
+                <!-- Robux Card 1500 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 1500, 225000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">1500 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 225.000</span>
+                </div>
+                <!-- Robux Card 2000 Instan -->
+                <div class="robux-card bg-gray-50 border-2 border-gray-400 rounded-xl p-4 text-center hover:bg-gray-100" onclick="selectRobux(this, 2000, 300000, 'instant')">
+                    <span class="block text-blue-500 font-bold text-2xl sm:text-3xl robux-amount">2000 Robux</span>
+                    <span class="block text-gray-700 text-lg sm:text-xl font-medium mt-1 robux-price">Rp 300.000</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Input Kustom Robux -->
+        <section id="custom-input-section" class="mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Atau Masukkan Jumlah Robux Lain</h3>
+            <div id="custom-robux-input-container" class="custom-robux-input-container flex items-center bg-gray-50 border-2 border-gray-400 rounded-xl p-4">
+                <input type="number" id="custom-robux-amount" placeholder="Minimal 100" min="100"
+                       class="w-full px-4 py-3 bg-gray-50 border border-gray-400 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                <button id="select-custom-button" onclick="selectCustomRobux()"
+                        class="ml-4 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">
+                    Pilih
+                </button>
             </div>
         </section>
 
@@ -249,57 +331,39 @@
 
         <!-- Bagian Tutorial Gamepass -->
         <section id="tutorial-gamepass" class="mt-10 p-6 bg-gray-50 rounded-2xl shadow-lg">
-            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Panduan Lengkap Membuat Gamepass Roblox</h2>
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Panduan Membuat Gamepass Roblox (Sederhana)</h2>
             <p class="text-gray-700 mb-4">
-                Agar proses top up Robux Anda berjalan lancar, Anda perlu membuat **Gamepass** di akun Roblox Anda dengan harga yang sesuai. Tutorial ini akan memandu Anda langkah demi langkah.
+                Ikuti langkah-langkah di bawah ini untuk membuat Gamepass yang kami perlukan.
             </p>
 
-            <div class="mb-6">
-                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Langkah-langkah Membuat Gamepass:</h3>
-                <ol class="list-decimal list-inside text-gray-700 space-y-2">
-                    <li>
-                        <strong class="font-semibold">Buka Halaman Buat Gamepass</strong>
-                        <ul class="list-disc list-inside ml-4">
-                            <li>Buka browser Anda dan kunjungi halaman `create` di Roblox: <a href="https://www.roblox.com/develop?View=13" target="_blank" class="text-blue-600 hover:underline">roblox.com/develop?View=13</a></li>
-                            <li>Pastikan Anda sudah login ke akun Roblox Anda.</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong class="font-semibold">Pilih Pengalaman Anda (Place)</strong>
-                        <ul class="list-disc list-inside ml-4">
-                            <li>Di halaman `My Creations`, Anda akan melihat daftar semua game/place yang Anda miliki.</li>
-                            <li>Klik pada tempat (place) yang ingin Anda gunakan untuk Gamepass. Biasanya, ini adalah `Personal Server` atau place default Anda.</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong class="font-semibold">Unggah Gamepass</strong>
-                        <ul class="list-disc list-inside ml-4">
-                            <li>Di halaman tempat Anda, cari dan klik `Associated Items` (Item Terkait) di menu sebelah kiri.</li>
-                            <li>Pilih `Passes`.</li>
-                            <li>Klik tombol `Create a Pass`.</li>
-                            <li>Klik `Change Image` untuk mengunggah gambar Gamepass dari perangkat Anda. Anda bisa menggunakan gambar apa saja.</li>
-                            <li>Beri nama Gamepass Anda (misalnya: "Robux Top Up") dan tambahkan deskripsi singkat.</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong class="font-semibold">Atur Gamepass untuk Dijual</strong>
-                        <ul class="list-disc list-inside ml-4">
-                            <li>Setelah Gamepass berhasil dibuat, klik pada Gamepass tersebut.</li>
-                            <li>Di menu sebelah kiri, klik `Sales` (Penjualan).</li>
-                            <li>Aktifkan opsi `Item for Sale`.</li>
-                            <li>Pada kolom `Price in Robux`, masukkan harga yang telah kami berikan di halaman pembayaran. <strong class="font-bold text-red-600">Ini sangat penting!</strong> Masukkan harga yang persis sama.</li>
-                            <li>Roblox akan mengambil biaya 30% dari harga jual. Jadi, jika Anda mengatur harga `143` Robux, Anda akan menerima `100` Robux.</li>
-                            <li>Klik `Save Changes` untuk menyimpan Gamepass Anda.</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong class="font-semibold">Selesai!</strong>
-                        <p class="ml-4">Sekarang, Gamepass Anda sudah siap. Setelah pembayaran terverifikasi, kami akan membeli Gamepass Anda.</p>
-                    </li>
-                </ol>
+            <div class="space-y-4">
+                <div class="bg-gray-200 p-4 rounded-lg shadow">
+                    <strong class="text-lg text-blue-600">Langkah 1: Buka Halaman Gamepass</strong>
+                    <p class="text-gray-700 mt-2">
+                        Pergi ke halaman `My Creations` Roblox di <a href="https://www.roblox.com/develop?View=13" target="_blank" class="text-blue-600 hover:underline">roblox.com/develop?View=13</a>, lalu klik tempat (place) Anda.
+                    </p>
+                </div>
+                <div class="bg-gray-200 p-4 rounded-lg shadow">
+                    <strong class="text-lg text-blue-600">Langkah 2: Buat Gamepass Baru</strong>
+                    <p class="text-gray-700 mt-2">
+                        Di menu kiri, pilih `Associated Items` > `Passes` > `Create a Pass`. Unggah gambar, beri nama, dan deskripsi.
+                    </p>
+                </div>
+                <div class="bg-gray-200 p-4 rounded-lg shadow">
+                    <strong class="text-lg text-blue-600">Langkah 3: Atur Harga Jual</strong>
+                    <p class="text-gray-700 mt-2">
+                        Klik Gamepass yang baru Anda buat, pilih `Sales`, lalu nyalakan `Item for Sale`. Masukkan harga Gamepass yang kami berikan (Roblox akan mengambil 30%).
+                    </p>
+                </div>
+                <div class="bg-gray-200 p-4 rounded-lg shadow">
+                    <strong class="text-lg text-blue-600">Langkah 4: Selesai!</strong>
+                    <p class="text-gray-700 mt-2">
+                        Simpan perubahan dan Gamepass Anda sudah siap! Kami akan membelinya setelah pembayaran diverifikasi.
+                    </p>
+                </div>
             </div>
             <p class="text-red-600 font-bold mt-4">
-                Penting: Pastikan Anda telah mengunggah Gamepass dengan harga yang benar sebelum mengirimkan format top up. Jika ada kesalahan, kami tidak bertanggung jawab.
+                Penting: Pastikan harga yang Anda masukkan sudah benar sebelum mengirimkan format top up.
             </p>
         </section>
 
@@ -320,30 +384,72 @@
         // Deklarasi variabel global untuk menyimpan jumlah dan harga yang dipilih
         let selectedAmount = null;
         let selectedPrice = null;
+        let selectedMethod = 'gamepass'; // Default metode adalah gamepass
 
-        // Harga per Robux (Rp 12.000 / 100 Robux = Rp 120 per Robux)
-        const pricePerRobux = 120;
+        // Harga per Robux
+        const pricePerRobuxGamepass = 120;
+        const pricePerRobuxInstant = 150;
 
         // Nomor WhatsApp yang dituju
         const whatsappNumber = "6282241515939";
 
         // Mendapatkan elemen-elemen DOM yang diperlukan
-        const robuxCards = document.querySelectorAll('.robux-card');
+        const allRobuxCards = document.querySelectorAll('.robux-card');
         const customRobuxInput = document.getElementById('custom-robux-amount');
         const customRobuxContainer = document.getElementById('custom-robux-input-container');
         const paymentSection = document.getElementById('payment-section');
         const gamepassInfoSection = document.getElementById('gamepass-info-section');
+        const tutorialGamepassSection = document.getElementById('tutorial-gamepass');
         const messageBox = document.getElementById('message-box');
         const messageText = document.getElementById('message-text');
         const orderButton = document.getElementById('order-button');
         const usernameInput = document.getElementById('roblox-username');
 
-        // Elemen-elemen baru untuk alur pembayaran
+        // Elemen-elemen baru untuk alur pembayaran dan metode
         const proofUploadSection = document.getElementById('proof-upload-section');
         const paymentProofFile = document.getElementById('payment-proof-file');
         const sendProofButton = document.getElementById('send-proof-button');
         const topupFormatSection = document.getElementById('topup-format-section');
         const sendFormatLink = document.getElementById('send-format-link');
+        const methodGamepassRadio = document.getElementById('method-gamepass');
+        const methodInstantRadio = document.getElementById('method-instant');
+        const gamepassOptionsSection = document.getElementById('gamepass-options-section');
+        const instantOptionsSection = document.getElementById('instant-options-section');
+
+        // Menambahkan event listener untuk radio button metode
+        methodGamepassRadio.addEventListener('change', () => selectMethod('gamepass'));
+        methodInstantRadio.addEventListener('change', () => selectMethod('instant'));
+        
+        // Panggil fungsi selectMethod saat halaman dimuat
+        selectMethod('gamepass');
+
+        /**
+         * Fungsi untuk memilih metode top up (Gamepass atau Instan)
+         * @param {string} method - Metode yang dipilih ('gamepass' atau 'instant').
+         */
+        function selectMethod(method) {
+            selectedMethod = method;
+            // Reset pilihan Robux sebelumnya
+            selectedAmount = null;
+            selectedPrice = null;
+            allRobuxCards.forEach(card => card.classList.remove('selected'));
+            customRobuxContainer.classList.remove('selected');
+            customRobuxInput.value = '';
+            gamepassInfoSection.classList.add('hidden');
+            paymentSection.classList.add('hidden');
+            orderButton.classList.remove('hidden');
+
+            // Tampilkan atau sembunyikan opsi Robux dan tutorial yang relevan
+            if (selectedMethod === 'gamepass') {
+                gamepassOptionsSection.classList.remove('hidden');
+                instantOptionsSection.classList.add('hidden');
+                tutorialGamepassSection.classList.remove('hidden');
+            } else { // instant
+                gamepassOptionsSection.classList.add('hidden');
+                instantOptionsSection.classList.remove('hidden');
+                tutorialGamepassSection.classList.add('hidden');
+            }
+        }
 
         /**
          * Fungsi untuk menampilkan pesan di message box.
@@ -365,10 +471,19 @@
          * @param {HTMLElement} element - Elemen kartu yang diklik.
          * @param {number} amount - Jumlah Robux yang dipilih.
          * @param {number} price - Harga Robux yang dipilih.
+         * @param {string} method - Metode top-up yang dipilih.
          */
-        function selectRobux(element, amount, price) {
+        function selectRobux(element, amount, price, method) {
+            // Pastikan radio button metode yang benar terpilih
+            if (method === 'gamepass') {
+                methodGamepassRadio.checked = true;
+            } else {
+                methodInstantRadio.checked = true;
+            }
+            selectMethod(method);
+
             // Hapus kelas 'selected' dari semua kartu dan input kustom
-            robuxCards.forEach(card => card.classList.remove('selected'));
+            allRobuxCards.forEach(card => card.classList.remove('selected'));
             customRobuxContainer.classList.remove('selected');
 
             // Tambahkan kelas 'selected' ke kartu yang baru diklik
@@ -381,8 +496,12 @@
             // Hapus nilai dari input kustom
             customRobuxInput.value = '';
 
-            // Perbarui tampilan informasi Gamepass
-            updateGamepassInfo(selectedAmount);
+            // Perbarui tampilan informasi Gamepass jika metode gamepass
+            if (selectedMethod === 'gamepass') {
+                updateGamepassInfo(selectedAmount);
+            } else {
+                gamepassInfoSection.classList.add('hidden');
+            }
         }
 
         /**
@@ -390,6 +509,7 @@
          */
         function selectCustomRobux() {
             const amount = parseInt(customRobuxInput.value, 10);
+            const currentPricePerRobux = selectedMethod === 'gamepass' ? pricePerRobuxGamepass : pricePerRobuxInstant;
 
             // Validasi input: Cek apakah nominal valid dan lebih dari atau sama dengan 100
             if (isNaN(amount) || amount < 100) {
@@ -402,20 +522,24 @@
             }
 
             // Hapus kelas 'selected' dari semua kartu
-            robuxCards.forEach(card => card.classList.remove('selected'));
+            allRobuxCards.forEach(card => card.classList.remove('selected'));
 
             // Tambahkan kelas 'selected' ke container input kustom
             customRobuxContainer.classList.add('selected');
 
-            // Hitung harga berdasarkan nominal kustom
-            const price = amount * pricePerRobux;
+            // Hitung harga berdasarkan nominal kustom dan metode yang dipilih
+            const price = amount * currentPricePerRobux;
 
             // Simpan nilai ke variabel global
             selectedAmount = amount;
             selectedPrice = price;
 
-            // Perbarui tampilan informasi Gamepass
-            updateGamepassInfo(selectedAmount);
+            // Perbarui tampilan informasi Gamepass jika metode gamepass
+            if (selectedMethod === 'gamepass') {
+                updateGamepassInfo(selectedAmount);
+            } else {
+                gamepassInfoSection.classList.add('hidden');
+            }
         }
 
         /**
@@ -451,7 +575,7 @@
             }
 
             // Menampilkan detail pesanan di bagian pembayaran
-            document.getElementById('selected-robux').innerText = `${selectedAmount.toLocaleString('id-ID')} Robux`;
+            document.getElementById('selected-robux').innerText = `${selectedAmount.toLocaleString('id-ID')} Robux (${selectedMethod})`;
             document.getElementById('total-price').innerText = `Rp ${selectedPrice.toLocaleString('id-ID')}`;
 
             // Tampilkan bagian pembayaran
@@ -482,8 +606,7 @@
         function sendPaymentProof() {
             const username = usernameInput.value.trim();
             
-            // Buat pesan WhatsApp untuk kirim bukti pembayaran
-            const proofMessage = `Halo KAZEROBLOX,%0ASaya telah melakukan top up.%0A%0ADetail Pesanan:%0ANama Roblox: ${username}%0AJumlah Robux: ${selectedAmount.toLocaleString('id-ID')} Robux%0APembayaran: QRIS%0A%0AIni adalah bukti pembayarannya: (Sertakan bukti pembayaran disini)`;
+            const proofMessage = `Halo KAZEROBLOX,%0ASaya telah melakukan top up dengan metode ${selectedMethod}.%0A%0ADetail Pesanan:%0ANama Roblox: ${username}%0AJumlah Robux: ${selectedAmount.toLocaleString('id-ID')} Robux%0ATotal Bayar: Rp ${selectedPrice.toLocaleString('id-ID')}%0A%0AIni adalah bukti pembayarannya: (Sertakan bukti pembayaran disini)`;
             
             // Buka tautan WhatsApp di tab baru
             window.open(`https://wa.me/${whatsappNumber}?text=${proofMessage}`, '_blank');
@@ -499,7 +622,7 @@
          */
         function showTopupFormat() {
             const username = usernameInput.value.trim();
-            const topupMessage = `Halo KAZEROBLOX,%0AIni format topup saya.%0A%0ANama Roblox: ${username}%0AJumlah Robux: ${selectedAmount.toLocaleString('id-ID')} Robux%0A%0AMohon diproses, terima kasih.`;
+            const topupMessage = `Halo KAZEROBLOX,%0AIni format topup saya untuk metode ${selectedMethod}.%0A%0ANama Roblox: ${username}%0AJumlah Robux: ${selectedAmount.toLocaleString('id-ID')} Robux%0A%0AMohon diproses, terima kasih.`;
             
             // Set URL untuk tombol WhatsApp Kirim Format Top Up
             sendFormatLink.href = `https://wa.me/${whatsappNumber}?text=${topupMessage}`;
