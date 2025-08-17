@@ -114,6 +114,22 @@
             </div>
         </section>
 
+        <!-- Persyaratan Metode Instan (tersembunyi secara default) -->
+        <section id="instant-requirements-section" class="hidden bg-yellow-100 p-6 rounded-xl shadow-lg border-2 border-yellow-400 mb-8 max-w-lg mx-auto">
+            <h3 class="text-xl sm:text-2xl font-bold text-yellow-800 mb-2 text-center">Syarat Top Up Robux Instan</h3>
+            <p class="text-yellow-700 text-sm mb-4">
+                Metode Instan hanya bisa digunakan jika akun Roblox Anda memenuhi persyaratan berikut:
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-yellow-900 font-medium">
+                <li><span class="font-bold">Wajib bergabung</span> dengan grup Roblox <a href="https://www.roblox.com/share/g/758074897" target="_blank" class="text-blue-600 underline font-bold">Laxerouse</a> terlebih dahulu.</li>
+                <li>Sudah menjadi anggota grup <span class="font-bold">selama lebih dari 14 hari</span>.</li>
+                <li>Akun Roblox sudah <span class="font-bold">terverifikasi email dan 2FA sudah aktif</span>.</li>
+            </ul>
+            <p class="text-yellow-700 text-sm mt-4 font-semibold">
+                Jika saat top up muncul pesan "Not currently eligible", itu berarti akun Anda belum memenuhi persyaratan waktu tunggu 14 hari.
+            </p>
+        </section>
+
         <!-- Pilihan Jumlah Robux - Gamepass Method (Tampilkan secara default) -->
         <section id="gamepass-options-section" class="mb-8">
             <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Pilih Jumlah Robux (Gamepass)</h2>
@@ -400,6 +416,7 @@
         const paymentSection = document.getElementById('payment-section');
         const gamepassInfoSection = document.getElementById('gamepass-info-section');
         const tutorialGamepassSection = document.getElementById('tutorial-gamepass');
+        const instantRequirementsSection = document.getElementById('instant-requirements-section'); // New element
         const messageBox = document.getElementById('message-box');
         const messageText = document.getElementById('message-text');
         const orderButton = document.getElementById('order-button');
@@ -444,10 +461,12 @@
                 gamepassOptionsSection.classList.remove('hidden');
                 instantOptionsSection.classList.add('hidden');
                 tutorialGamepassSection.classList.remove('hidden');
+                instantRequirementsSection.classList.add('hidden'); // Sembunyikan persyaratan Instan
             } else { // instant
                 gamepassOptionsSection.classList.add('hidden');
                 instantOptionsSection.classList.remove('hidden');
                 tutorialGamepassSection.classList.add('hidden');
+                instantRequirementsSection.classList.remove('hidden'); // Tampilkan persyaratan Instan
             }
         }
 
